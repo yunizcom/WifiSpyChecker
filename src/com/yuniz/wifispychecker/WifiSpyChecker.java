@@ -7,6 +7,8 @@ import java.net.UnknownHostException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.revmob.RevMob;
+import com.revmob.RevMobTestingMode;
 import com.yuniz.wifispychecker.R;
 
 import android.net.wifi.WifiInfo;
@@ -49,6 +51,8 @@ public class WifiSpyChecker extends Activity {
 	
 	Timer WFT = new Timer();
 	
+	private RevMob revmob;
+	
 	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	@SuppressLint("NewApi")
 	@Override
@@ -69,6 +73,12 @@ public class WifiSpyChecker extends Activity {
 		textView4 = (TextView) findViewById(R.id.textView4);
 		
 		editText1.setText(getIpAddr());
+		
+		/*----RevMob Ads----*/
+		revmob = RevMob.start(this);
+//revmob.setTestingMode(RevMobTestingMode.WITH_ADS);
+		revmob.showFullscreen(this);
+        /*----RevMob Ads----*/
 	}
 
 	public void updateStatus(){
@@ -82,6 +92,7 @@ public class WifiSpyChecker extends Activity {
 		if(scanBtn.getText().toString() == "STOP"){
 			currentScannedIp4 = 257;
 			scanBtn.setText("SCAN");
+			revmob.showFullscreen(this);
 		}else{
 			pcsOnline=0;
 		    ipsList.removeAllViewsInLayout();
@@ -119,6 +130,9 @@ public class WifiSpyChecker extends Activity {
 		if(currentScannedIp4 > 255){
 			scanBtn.setText("SCAN");
 			pcsOnline=0;
+			
+			revmob.showFullscreen(this);
+			
 			return;
 		}
 		
